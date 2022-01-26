@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/aalexmann/job_tracker#readme",
   "devDependencies": {
-    "@babel/preset-react": "^7.16.7",
     "jest": "^27.4.7"
   }
 }
