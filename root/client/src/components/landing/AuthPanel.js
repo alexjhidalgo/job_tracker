@@ -20,7 +20,7 @@ function AuthPanel() {
   };
 
   return (
-    <div className=" w-[90%] sm:w-[60%] md:w-[80%] rounded bg-white">
+    <div className=" w-[90%] sm:w-[60%] md:w-[80%] rounded bg-white" id="loginSection">
       <div className="flex flex-row">
         <Tab text="LOGIN" active={showLogin} setSelf={setShowLogin} setOther={setShowSignup} />
         <Tab text="SIGN UP" active={showSignup} setSelf={setShowSignup} setOther={setShowLogin} />
