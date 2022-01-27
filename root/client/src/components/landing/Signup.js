@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Signup() {
+function Signup({ setError }) {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({});
 
@@ -13,9 +13,6 @@ function Signup() {
 
   const attemptSignup = (e) => {
     e.preventDefault();
-    console.log(
-      `signup username: ${inputs.username}, password: ${inputs.password}, repeatPassword: ${inputs.repeatPassword}`
-    );
     navigate("/home");
   };
 
@@ -27,6 +24,15 @@ function Signup() {
         placeholder="Username"
         className="grayInput w-full"
         value={inputs.username || ""}
+        onChange={handleChange}
+      />
+
+      <input
+        name="email"
+        type="text"
+        placeholder="Email"
+        value={inputs.email || ""}
+        className="grayInput w-full"
         onChange={handleChange}
       />
 

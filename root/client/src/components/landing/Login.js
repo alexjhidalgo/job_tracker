@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Login({ setError }) {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({});
 
@@ -13,7 +13,6 @@ function Login() {
 
   const attemptLogin = (e) => {
     e.preventDefault();
-    console.log(`login username: ${inputs.username}, password: ${inputs.password}`);
     navigate("/home");
   };
 

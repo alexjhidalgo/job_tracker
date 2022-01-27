@@ -1,7 +1,8 @@
 import React from "react";
 
-function Tab({ text, active, setSelf, setOther }) {
+function Tab({ text, active, setSelf, setOther, setError }) {
   const toggle = () => {
+    setError(null);
     setSelf(true);
     setOther(false);
   };
