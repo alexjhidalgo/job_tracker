@@ -1,16 +1,14 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Menu } from "@headlessui/react";
 
 function DropdownOption({ name, path }) {
-  const navigate = useNavigate();
-
   return (
-    <div
-      className="p-3 text-white cursor-pointer hover:bg-gray-800 bg-transparent"
-      onClick={path ? () => navigate(path) : null}
-    >
-      {name}
-    </div>
+    <Menu.Item>
+      <Link to={path} className="block w-full p-2 hover:bg-slate-900">
+        {name}
+      </Link>
+    </Menu.Item>
   );
 }
 
