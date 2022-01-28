@@ -3,11 +3,15 @@
 @tailwind utilities;
 
 @layer components {
-  .blueButton {
-    @apply text-white bg-gray-700 rounded p-3 cursor-pointer text-center;
+  .customGradient {
+    @apply bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900;
+  }
+
+  .customButton {
+    @apply text-white rounded p-3 cursor-pointer text-center;
   }
 
   .grayInput {
-    @apply border-2 border-gray-400 rounded outline-none focus:border-black p-2;
+    @apply border-2 border-gray-400 rounded outline-none focus:border-gray-700 p-2;
   }
 }
