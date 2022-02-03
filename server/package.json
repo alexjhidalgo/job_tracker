@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
     "jest": "^27.4.7"
   },
   "dependencies": {
+    "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "pg": "^8.7.1"
   }
