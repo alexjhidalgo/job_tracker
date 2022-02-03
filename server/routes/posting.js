@@ -1,11 +1,12 @@
 const router = require("express").Router();
+const pool = require("../db_config");
 
 // Get single posting
 router.get("/:posting_number", function (req, res, next) {
   let { posting_number } = req.params;
   const text =
     'SELECT "Id", "Company", "Position", "Description", "Salary", "Deadline", "Account_Id" FROM public."Postings" WHERE "Account_Id" = $1 AND "Id" = $1';
-  client.query(text, [posting_number], (err, result) => {
+  pool.query(text, [posting_number], (err, result) => {
     if (err) {
       console.log(err);
       res.status(400).send(err);
