@@ -14,4 +14,25 @@
   .grayInput {
     @apply border-2 border-gray-400 rounded outline-none focus:border-gray-700 p-2;
   }
+  .btn {
+    font: inherit;
+    padding: 0.5rem 1 rem;
+    cursor: pointer;
+    border-radius: 2px;
+    background-color: #800040;
+    color: white;
+    border: 1px solid #800040;
+    margin: 0 1rem;
+  }
+  .tile {
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    width: 20rem;
+  }
+
+  .actions {
+    text-align: right;
+  }
 }
