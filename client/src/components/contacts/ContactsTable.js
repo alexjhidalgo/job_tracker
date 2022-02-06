@@ -1,8 +1,27 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useTable } from "react-table";
 import IconOptions from "./IconOptions";
 
 function ContactsTable() {
+  const buildExampleData = (repeat) => {
+    let dataList = [];
+    for (let i = 0; i < repeat; ++i) {
+      dataList.push({
+        nameCol: "firstname lastname " + i,
+        companyCol: "company " + i,
+        positionCol: "position " + i,
+        emailCol: i + "@email.com",
+        numberCol: "555-5555",
+        notesCol:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit," +
+          "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      });
+    }
+    return dataList;
+  };
+
+  const [data, setData] = useState(buildExampleData(10));
+
   const columns = useMemo(
     () => [
       {
@@ -32,30 +51,11 @@ function ContactsTable() {
       },
       {
         accessor: "optionsCol",
-        Cell: () => <IconOptions />,
+        Cell: (tableProps) => <IconOptions data={data} setData={setData} tableProps={tableProps} />,
       },
     ],
-    []
+    [data]
   );
-
-  const buildData = (repeat) => {
-    let dataList = [];
-    for (let i = 0; i < repeat; ++i) {
-      dataList.push({
-        nameCol: "firstname lastname " + i,
-        companyCol: "company " + i,
-        positionCol: "position " + i,
-        emailCol: i + "@email.com",
-        numberCol: "555-5555",
-        notesCol:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit," +
-          "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      });
-    }
-    return dataList;
-  };
-
-  const data = useMemo(() => buildData(10), []);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data });
 
