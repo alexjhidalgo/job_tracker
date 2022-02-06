@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
-function DeleteModal({ showModal, closeModal, handleDelete, name }) {
+function DeleteContactModal({ showModal, closeModal, handleDelete, name }) {
   return (
     <Transition appear show={showModal} as={Fragment}>
       <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={closeModal}>
@@ -36,12 +36,12 @@ function DeleteModal({ showModal, closeModal, handleDelete, name }) {
               <div className="flex flex-row justify-evenly mt-6">
                 <button
                   type="button"
-                  className="text-white rounded px-5 py-2 bg-slate-700 hover:bg-slate-900"
+                  className="text-white rounded px-10 py-2 bg-slate-700 hover:bg-slate-900"
                   onClick={closeModal}
                 >
                   No
                 </button>
-                <button type="button" className="rounded px-5 py-2 bg-red-300 hover:bg-red-400" onClick={handleDelete}>
+                <button type="button" className="rounded px-10 py-2 bg-red-300 hover:bg-red-400" onClick={handleDelete}>
                   Yes
                 </button>
               </div>
@@ -53,4 +53,4 @@ function DeleteModal({ showModal, closeModal, handleDelete, name }) {
   );
 }
 
-export default DeleteModal;
+export default DeleteContactModal;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { XIcon, PencilIcon } from "@heroicons/react/solid";
-import DeleteModal from "./DeleteModal";
+import DeleteContactModal from "./DeleteContactModal";
 
 function IconOptions({ data, setData, tableProps }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -23,7 +23,7 @@ function IconOptions({ data, setData, tableProps }) {
         <XIcon className="h-5" />
       </button>
 
-      <DeleteModal
+      <DeleteContactModal
         showModal={showDeleteModal}
         closeModal={closeDeleteModal}
         handleDelete={handleDelete}
