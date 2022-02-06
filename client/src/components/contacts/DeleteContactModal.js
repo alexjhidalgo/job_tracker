@@ -1,7 +1,9 @@
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
-function DeleteContactModal({ showModal, closeModal, handleDelete, name }) {
+function DeleteContactModal({ data, setData, showModal, closeModal, rowIndex, name }) {
+  const handleDelete = () => setData(data.filter((_, i) => i !== rowIndex));
+
   return (
     <Transition appear show={showModal} as={Fragment}>
       <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={closeModal}>
