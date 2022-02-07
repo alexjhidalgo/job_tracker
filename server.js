@@ -1,7 +1,9 @@
 const express = require("express");
+const bodyParser = require('body-parser')
 
 const app = express();
 
+app.use(bodyParser.json())
 app.use("/account", require("./routes/account"));
 app.use("/posting", require("./routes/posting"));
 app.use("/postings", require("./routes/postings"));
