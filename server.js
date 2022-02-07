@@ -7,6 +7,8 @@ app.use(bodyParser.json())
 app.use("/account", require("./routes/account"));
 app.use("/posting", require("./routes/posting"));
 app.use("/postings", require("./routes/postings"));
+app.use("/resume", require("./routes/resume"));
+app.use("/offers", require("./routes/offers"));
 
 // Local port 3000 is used by client
 const PORT = process.env.PORT || 3001;
