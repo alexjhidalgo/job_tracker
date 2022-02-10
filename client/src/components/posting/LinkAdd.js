@@ -8,12 +8,12 @@ function LinkAdd() {
     return (
         <div className='tile'>
             <h2>Link Add</h2>
-            <form>
-                <input name='link-add' />
-            <div className='actions'>
-                <button className='btn' onClick={submitHandler}>Add Post</button>
+            <div className="container">
+                <input className="form-control" placeholder="Paste a Job Page Link" />
+                <div className='actions'>
+                    <button className='btn' onClick={submitHandler}>Add Post</button>
+                </div>
             </div>
-            </form>
         </div>
     )
 }
