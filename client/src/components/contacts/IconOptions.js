@@ -27,8 +27,7 @@ function IconOptions({ data, setData, tableProps }) {
         setData={setData}
         showModal={showEditModal}
         closeModal={closeEditModal}
-        rowValues={tableProps.row.original}
-        rowIndex={tableProps.row.index}
+        tableProps={tableProps}
       />
 
       <DeleteContactModal
@@ -36,8 +35,7 @@ function IconOptions({ data, setData, tableProps }) {
         setData={setData}
         showModal={showDeleteModal}
         closeModal={closeDeleteModal}
-        rowIndex={tableProps.row.index}
-        name={tableProps.row.original.nameCol}
+        tableProps={tableProps}
       />
     </div>
   );

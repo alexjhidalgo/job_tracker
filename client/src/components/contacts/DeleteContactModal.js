@@ -1,8 +1,18 @@
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
-function DeleteContactModal({ data, setData, showModal, closeModal, rowIndex, name }) {
-  const handleDelete = () => setData(data.filter((_, i) => i !== rowIndex));
+function DeleteContactModal({ data, setData, showModal, closeModal, tableProps }) {
+  const handleDelete = () => {
+    // TODO: JWT authorization header
+    fetch(`/contacts/${tableProps.row.original.idCol}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.error) return console.log(res.error);
+        setData(data.filter((_, i) => i !== tableProps.row.index));
+      });
+  };
 
   return (
     <Transition appear show={showModal} as={Fragment}>
@@ -33,7 +43,7 @@ function DeleteContactModal({ data, setData, showModal, closeModal, rowIndex, na
           >
             <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded">
               <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-slate-900">
-                Are you sure you want to remove <b>{name}</b> from your contacts?
+                Are you sure you want to remove <b>{tableProps.row.original.nameCol}</b> from your contacts?
               </Dialog.Title>
               <div className="flex flex-row justify-evenly mt-6">
                 <button

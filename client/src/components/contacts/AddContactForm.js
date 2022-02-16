@@ -14,18 +14,41 @@ function AddContactForm({ closeModal, setData }) {
 
   const handleSave = () => {
     if (!inputs.name) return setError("Name is required.");
-    setData((prevState) => [
-      {
-        nameCol: inputs.name,
-        companyCol: inputs.company,
-        positionCol: inputs.position,
-        emailCol: inputs.email,
-        numberCol: inputs.number,
-        notesCol: inputs.notes,
+
+    // TODO: JWT authorization header
+    fetch("/contacts", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-      ...prevState,
-    ]);
-    closeModal();
+      body: JSON.stringify({
+        name: inputs.name,
+        company: inputs.company,
+        position: inputs.position,
+        email: inputs.email,
+        number: inputs.number,
+        notes: inputs.notes,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.error) return console.log(res.error);
+
+        setData((prevState) => [
+          {
+            idCol: res.id,
+            nameCol: inputs.name,
+            companyCol: inputs.company,
+            positionCol: inputs.position,
+            emailCol: inputs.email,
+            numberCol: inputs.number,
+            notesCol: inputs.notes,
+          },
+          ...prevState,
+        ]);
+        closeModal();
+      });
   };
 
   return (

@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import EditContactForm from "./EditContactForm";
 
-function EditContactModal({ data, setData, showModal, closeModal, rowIndex, rowValues }) {
+function EditContactModal({ data, setData, showModal, closeModal, tableProps }) {
   return (
     <Transition appear show={showModal} as={Fragment}>
       <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={() => null}>
@@ -31,13 +31,7 @@ function EditContactModal({ data, setData, showModal, closeModal, rowIndex, rowV
             leaveTo="opacity-0 scale-95"
           >
             <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded">
-              <EditContactForm
-                closeModal={closeModal}
-                data={data}
-                setData={setData}
-                rowIndex={rowIndex}
-                rowValues={rowValues}
-              />
+              <EditContactForm closeModal={closeModal} data={data} setData={setData} tableProps={tableProps} />
             </div>
           </Transition.Child>
         </div>

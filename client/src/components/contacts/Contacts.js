@@ -1,26 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ContactsTable from "./ContactsTable";
 import AddContactButton from "./AddContactButton";
 
 function Contacts() {
-  const buildExampleData = (repeat) => {
-    let dataList = [];
-    for (let i = 0; i < repeat; ++i) {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/contacts")
+      .then((res) => res.json())
+      .then((res) => {
+        setData(buildData(res));
+        setLoading(false);
+      });
+  }, []);
+
+  const buildData = (resultList) => {
+    const dataList = [];
+    for (let i = 0; i < resultList.length; ++i) {
       dataList.push({
-        nameCol: "firstname lastname " + i,
-        companyCol: "company " + i,
-        positionCol: "position " + i,
-        emailCol: i + "@email.com",
-        numberCol: "555-5555",
-        notesCol:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit," +
-          "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        idCol: resultList[i].id,
+        nameCol: resultList[i].name,
+        companyCol: resultList[i].company,
+        positionCol: resultList[i].position,
+        emailCol: resultList[i].email,
+        numberCol: resultList[i].phone_number,
+        notesCol: resultList[i].notes,
       });
     }
+
     return dataList;
   };
-
-  const [data, setData] = useState(buildExampleData(10));
 
   return (
     <div className="flex w-full justify-center">
@@ -29,7 +39,7 @@ function Contacts() {
           <h1 className="text-4xl sm:text-5xl text-slate-900">Contacts</h1>
           <AddContactButton setData={setData} />
         </div>
-        <ContactsTable data={data} setData={setData} />
+        <ContactsTable data={data} setData={setData} loading={loading} />
       </div>
     </div>
   );
