@@ -14,8 +14,13 @@
   .grayInput {
     @apply border-2 border-gray-400 rounded outline-none focus:border-gray-700 p-2;
   }
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .btn {
-    font: inherit;
+    font: 16px;
     padding: 0.5rem 1 rem;
     cursor: pointer;
     border-radius: 2px;
