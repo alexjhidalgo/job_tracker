@@ -21,7 +21,7 @@ router.post("/", (req, res) => {
   res.send(`Here is placeholder code for adding a new job application_number`);
 });
 
-// Delete a posting
+// Delete an application
 router.delete("/:application_number", (req, res) => {
   let { applications_number } = req.params;
   let sql = 'DELETE FROM public."Applications" WHERE "Account_Id" = $1 AND "Id" = $1';
