@@ -13,8 +13,8 @@ const isMatch = async(userPassword,existingPassord) =>
   return await bcrypt.compare(userPassword,existingPassord)
 }
 
-const generateAuthToken =  async(id) => {
-  return  jwt.sign({ _id: id.toString()},'cs467capstone')
+const generateAuthToken =  async(payload) => {
+  return  jwt.sign({ id: payload.id.toString(), username:payload.username.toString()},'cs467capstone')
 }  
 
 ////// Account C.R.U.D.
@@ -23,7 +23,6 @@ router.get("/:account_number",auth, function(req, res){
   const text = 'SELECT "id", "username", "password", "email" FROM "accounts" WHERE "id" = $1';
   pool.query(text, [account_number], (err, result) => {
     if (err) {
-      console.log(err); 
       res.status(400).send(err);
     }
     res.status(200).send(result.rows);
@@ -58,7 +57,7 @@ router.post("/login", (req, res) => {
         {
           console.log(match)
           if(match){
-              generateAuthToken(result.rows[0].id).then(token => {
+              generateAuthToken({id: result.rows[0].id,username: username}).then(token => {
               res.status(200).send({"messege": "Log In Successful","jwt":token});
               }
             )       
