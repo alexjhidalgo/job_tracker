@@ -5,7 +5,7 @@ const pool = require("../db_config");
 
 router.get("/:account_number", function (req, res, next) {
   let { account_number } = req.params;
-  const text = 'SELECT "Id", "Username", "Password", "Email" FROM public."Accounts" WHERE "Id" = $1';
+  const text = "SELECT id, username, password, email FROM public.accounts WHERE id = $1";
   pool.query(text, [account_number], (err, result) => {
     if (err) {
       console.log(err);
