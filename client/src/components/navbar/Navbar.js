@@ -7,12 +7,12 @@ import DropdownOption from "./DropdownOption";
 function Navbar() {
   return (
     <>
-      <div className="flex flex-row justify-end sm:justify-between items-center p-5 w-full customGradient text-white">
+      <div className="flex flex-row justify-end sm:justify-between items-center p-5 w-full bg-slate-900 text-white">
         <div className="hidden sm:flex flex-row items-center gap-4">
           <img src="/images/jt_logo.png" alt="job tracker logo" className="h-8" />
           <h1 className="text-xl">Job Tracker</h1>
         </div>
-        <Menu as="div" className="relative inline-block">
+        <Menu as="div" className="relative inline-block z-10">
           <div>
             <Menu.Button className="flex flex-row gap-4 hover:text-slate-300">
               <p>[username]</p>
