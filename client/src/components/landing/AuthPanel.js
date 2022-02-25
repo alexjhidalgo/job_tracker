@@ -16,8 +16,19 @@ function AuthPanel() {
   };
 
   const guestLogin = () => {
-    // TODO: implement guest login
-    navigate("/home");
+    fetch("/account/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: "Guest", password: "pass" }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.error) return setError(res.error);
+        localStorage.setItem("token", res.jwt);
+        navigate("/home");
+      });
   };
 
   return (
