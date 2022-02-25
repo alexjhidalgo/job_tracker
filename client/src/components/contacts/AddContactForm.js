@@ -15,12 +15,12 @@ function AddContactForm({ closeModal, setData }) {
   const handleSave = () => {
     if (!inputs.name) return setError("Name is required.");
 
-    // TODO: JWT authorization header
     fetch("/contacts", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
       },
       body: JSON.stringify({
         name: inputs.name,

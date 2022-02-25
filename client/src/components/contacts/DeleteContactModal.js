@@ -3,13 +3,16 @@ import { Dialog, Transition } from "@headlessui/react";
 
 function DeleteContactModal({ data, setData, showModal, closeModal, tableProps }) {
   const handleDelete = () => {
-    // TODO: JWT authorization header
     fetch(`/contacts/${tableProps.row.original.idCol}`, {
       method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.error) return console.log(res.error);
+        if (res.error) return alert(res.error);
+
         setData(data.filter((_, i) => i !== tableProps.row.index));
       });
   };

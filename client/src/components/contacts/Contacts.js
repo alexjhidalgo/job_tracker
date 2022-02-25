@@ -7,7 +7,11 @@ function Contacts() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/contacts")
+    fetch("/contacts", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
       .then((res) => res.json())
       .then((res) => {
         setData(buildData(res));

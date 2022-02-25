@@ -28,6 +28,7 @@ function EditContactForm({ data, setData, closeModal, tableProps }) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
       },
       body: JSON.stringify({
         id: inputs.idCol,
@@ -41,14 +42,12 @@ function EditContactForm({ data, setData, closeModal, tableProps }) {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.error) return console.log(res.error);
+        if (res.error) return alert(res.error);
 
         // Create new copy of state and replace chosen row with new input
         const dataCopy = [...data];
         dataCopy[tableProps.row.index] = inputs;
         setData(dataCopy);
-
-        closeModal();
       });
   };
 

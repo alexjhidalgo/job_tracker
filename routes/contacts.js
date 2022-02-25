@@ -1,12 +1,11 @@
 const router = require("express").Router();
 const pool = require("../db_config");
-// TODO: add verify JWT middleware for all routes
+const auth = require("../middleware/auth");
 
 // Get all contacts belonging to user
-router.get("/", (req, res) => {
+router.get("/", auth, (req, res) => {
   const allContactsQuery = "SELECT * FROM contacts WHERE account_id = $1";
-  // TODO: replace values with account_id from middleware verifying JWT
-  pool.query(allContactsQuery, [1], (err, result) => {
+  pool.query(allContactsQuery, [res.locals.user.id], (err, result) => {
     if (err) return res.status(400).json({ error: err });
 
     res.status(200).send(result.rows);
@@ -14,14 +13,13 @@ router.get("/", (req, res) => {
 });
 
 // Add new contact
-router.post("/", (req, res) => {
+router.post("/", auth, (req, res) => {
   const insertQuery =
     "INSERT INTO contacts " +
     "(account_id, name, company, position, email, phone_number, notes) " +
     "VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;";
   const values = [
-    // TODO: replace below with account_id from middleware verifying JWT
-    1,
+    res.locals.user.id,
     req.body.name,
     req.body.company,
     req.body.position,
@@ -38,7 +36,7 @@ router.post("/", (req, res) => {
 });
 
 // Update existing contact
-router.put("/", (req, res) => {
+router.put("/", auth, (req, res) => {
   const updateQuery =
     "UPDATE contacts SET " +
     "(name, company, position, email, phone_number, notes) " +
@@ -61,7 +59,7 @@ router.put("/", (req, res) => {
 });
 
 // Delete existing contact
-router.delete("/:id", (req, res) => {
+router.delete("/:id", auth, (req, res) => {
   const deleteQuery = "DELETE FROM contacts WHERE id = $1;";
   const values = [req.params.id];
 
