@@ -1,15 +1,24 @@
 require("dotenv").config();
 const { Pool } = require("pg");
 
-const credentials = {
-  user: process.env.PG_USER,
-  host: process.env.PG_HOST,
-  database: process.env.PG_DATABASE,
-  password: process.env.PG_PASS,
-  port: process.env.PG_PORT,
-};
+const connectionString = process.env.DATABASE_URL;
 
-const pool = new Pool(credentials);
+const pool = (() => {
+  if (process.env.NODE_ENV === "production") {
+    return new Pool({
+      connectionString,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    });
+  } else {
+    return new Pool({
+      connectionString,
+      ssl: false,
+    });
+  }
+})();
+
 pool.connect();
 
 module.exports = pool;

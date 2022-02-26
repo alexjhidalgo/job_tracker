@@ -1,10 +1,30 @@
-import React, { Fragment } from "react";
-import { Outlet } from "react-router-dom";
+import React, { Fragment, useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 import { MenuIcon } from "@heroicons/react/outline";
 import DropdownOption from "./DropdownOption";
 
 function Navbar() {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+
+  // Verify the user and get username everytime the navbar renders
+  useEffect(() => {
+    fetch("/account/verify", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.error) return navigate("/");
+        setUsername(res.username);
+      });
+  }, [navigate, setUsername]);
+
+  const logout = () => localStorage.removeItem("token");
+
   return (
     <>
       <div className="flex flex-row justify-end sm:justify-between items-center p-5 w-full bg-slate-900 text-white">
@@ -15,7 +35,7 @@ function Navbar() {
         <Menu as="div" className="relative inline-block z-10">
           <div>
             <Menu.Button className="flex flex-row gap-4 hover:text-slate-300">
-              <p>[username]</p>
+              <p className="text-xl">{username}</p>
               <MenuIcon className="h-7" />
             </Menu.Button>
           </div>
@@ -32,7 +52,7 @@ function Navbar() {
               <div className="py-1 divide-y divide-slate-400">
                 <DropdownOption name="Home" path="/home" />
                 <DropdownOption name="Contacts" path="/contacts" />
-                <DropdownOption name="Logout" path="/" />
+                <DropdownOption name="Logout" path="/" logout={logout} />
               </div>
             </Menu.Items>
           </Transition>

@@ -11,9 +11,37 @@ function Login({ setError }) {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
+  const validateInput = () => {
+    if (!inputs.username || !inputs.password) {
+      setError("Missing credentials");
+      return false;
+    }
+
+    return true;
+  };
+
   const attemptLogin = (e) => {
     e.preventDefault();
-    navigate("/home");
+
+    if (!validateInput()) return;
+
+    fetch("/account/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: inputs.username,
+        password: inputs.password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        if (res.error) return setError(res.error);
+        localStorage.setItem("token", res.jwt);
+        navigate("/home");
+      });
   };
 
   return (

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 
-function EditContactForm({ data, setData, closeModal, rowIndex, rowValues }) {
+function EditContactForm({ data, setData, closeModal, tableProps }) {
   const [inputs, setInputs] = useState({
-    nameCol: rowValues.nameCol,
-    companyCol: rowValues.companyCol,
-    positionCol: rowValues.positionCol,
-    emailCol: rowValues.emailCol,
-    numberCol: rowValues.numberCol,
-    notesCol: rowValues.notesCol,
+    idCol: tableProps.row.original.idCol,
+    nameCol: tableProps.row.original.nameCol,
+    companyCol: tableProps.row.original.companyCol,
+    positionCol: tableProps.row.original.positionCol,
+    emailCol: tableProps.row.original.emailCol,
+    numberCol: tableProps.row.original.numberCol,
+    notesCol: tableProps.row.original.notesCol,
   });
   const [error, setError] = useState("");
 
@@ -22,11 +23,32 @@ function EditContactForm({ data, setData, closeModal, rowIndex, rowValues }) {
   const handleEdit = () => {
     if (!inputs.nameCol) return setError("Name is required.");
 
-    const dataCopy = [...data];
-    dataCopy[rowIndex] = inputs;
-    setData(dataCopy);
+    fetch("/contacts", {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        id: inputs.idCol,
+        name: inputs.nameCol,
+        company: inputs.companyCol,
+        position: inputs.positionCol,
+        email: inputs.emailCol,
+        number: inputs.numberCol,
+        notes: inputs.notesCol,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.error) return alert(res.error);
 
-    closeModal();
+        // Create new copy of state and replace chosen row with new input
+        const dataCopy = [...data];
+        dataCopy[tableProps.row.index] = inputs;
+        setData(dataCopy);
+      });
   };
 
   return (

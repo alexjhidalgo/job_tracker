@@ -1,8 +1,9 @@
 import React, { useMemo } from "react";
 import { useTable } from "react-table";
 import IconOptions from "./IconOptions";
+import LoadingSpinner from "./LoadingSpinner";
 
-function ContactsTable({ data, setData }) {
+function ContactsTable({ data, setData, loading }) {
   const columns = useMemo(
     () => [
       {
@@ -28,7 +29,7 @@ function ContactsTable({ data, setData }) {
       {
         Header: "Notes",
         accessor: "notesCol",
-        Cell: ({ value }) => <div className="min-w-[200px] whitespace-pre-wrap">{value}</div>,
+        Cell: ({ value }) => <div className={`whitespace-pre-wrap ${value ? "min-w-[200px]" : null}`}>{value}</div>,
       },
       {
         accessor: "optionsCol",
@@ -40,9 +41,13 @@ function ContactsTable({ data, setData }) {
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data });
 
-  return (
+  return loading ? (
+    <LoadingSpinner />
+  ) : data.length === 0 ? (
+    <p className="text-slate-900 text-xl py-5">No existing contacts!</p>
+  ) : (
     <div className="mt-6 w-full overflow-auto border border-slate-900">
-      <table {...getTableProps()}>
+      <table {...getTableProps()} className="w-full">
         <thead className="bg-slate-900 text-white">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>

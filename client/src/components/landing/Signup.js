@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 function Signup({ setError }) {
-  const navigate = useNavigate();
   const [inputs, setInputs] = useState({});
 
   const handleChange = (e) => {
@@ -11,9 +9,41 @@ function Signup({ setError }) {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
+  const validateInput = () => {
+    if (!inputs.username || !inputs.email || !inputs.password) {
+      setError("Missing credentials");
+      return false;
+    }
+
+    if (inputs.password !== inputs.repeatPassword) {
+      setError("Passwords do not match");
+      return false;
+    }
+
+    return true;
+  };
+
   const attemptSignup = (e) => {
     e.preventDefault();
-    navigate("/home");
+
+    if (!validateInput()) return;
+
+    fetch("account", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: inputs.username,
+        password: inputs.password,
+        email: inputs.email,
+      }),
+    })
+      .then((res) => res)
+      .then((res) => {
+        if (res.status !== 200) return setError("Signup failed");
+        alert("Account created successfully. Please log in.");
+      });
   };
 
   return (
