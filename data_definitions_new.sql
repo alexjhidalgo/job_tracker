@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS postings;
 DROP TABLE IF EXISTS accounts;
 
 CREATE TABLE accounts (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   username TEXT NOT NULL,
   password TEXT NOT NULL,
   email TEXT NOT NULL
@@ -30,13 +30,13 @@ CREATE TABLE contacts (
 );
 
 CREATE TABLE skills (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   name TEXT NOT NULL,
   account_id INTEGER NOT NULL REFERENCES accounts ON DELETE CASCADE
 );
 
 CREATE TABLE postings (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   company TEXT NOT NULL,
   position TEXT NOT NULL,
   description TEXT,
@@ -46,7 +46,7 @@ CREATE TABLE postings (
 );
 
 CREATE TABLE applications (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   posting_id INTEGER NOT NULL REFERENCES postings ON DELETE CASCADE,
   account_id INTEGER NOT NULL REFERENCES accounts ON DELETE CASCADE,
   status TEXT,
@@ -55,14 +55,14 @@ CREATE TABLE applications (
 );
 
 CREATE TABLE communications (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   account_id INTEGER NOT NULL REFERENCES accounts ON DELETE CASCADE,
   date date NOT NULL,
   message TEXT
 );
 
 CREATE TABLE job_offers (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   account_id INTEGER NOT NULL REFERENCES accounts ON DELETE CASCADE,
   posting_id INTEGER NOT NULL REFERENCES postings ON DELETE CASCADE,
   salary TEXT NOT NULL,
@@ -72,37 +72,37 @@ CREATE TABLE job_offers (
 );
 
 CREATE TABLE resumes (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   account_id INTEGER NOT NULL REFERENCES accounts ON DELETE CASCADE,
   resume_link TEXT NOT NULL
 );
 
 CREATE TABLE contacts_communications (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   contact_id INTEGER NOT NULL REFERENCES contacts ON DELETE CASCADE,
   communication_id INTEGER NOT NULL REFERENCES communications ON DELETE CASCADE,
   account_id INTEGER NOT NULL REFERENCES accounts ON DELETE CASCADE
 );
 
 CREATE TABLE accounts_skills (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   skill_id INTEGER NOT NULL REFERENCES skills ON DELETE CASCADE,
   account_id INTEGER NOT NULL REFERENCES accounts ON DELETE CASCADE
 );
 
 CREATE TABLE applications_contacts (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   application_id INTEGER NOT NULL REFERENCES applications ON DELETE CASCADE,
   contact_id INTEGER NOT NULL REFERENCES contacts ON DELETE CASCADE,
   account_id INTEGER NOT NULL REFERENCES accounts ON DELETE CASCADE
 );
 
 CREATE TABLE postings_skills (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   skill_id INTEGER NOT NULL REFERENCES skills ON DELETE CASCADE,
   posting_id INTEGER NOT NULL REFERENCES postings ON DELETE CASCADE,
   account_id INTEGER NOT NULL REFERENCES accounts ON DELETE CASCADE
 );
 
-INSERT INTO accounts (id, username, password, email) VALUES (1, 'name1', 'pass1', 'mail1');
+INSERT INTO accounts (username, password, email) VALUES ('name1', 'pass1', 'mail1');
 INSERT INTO contacts (account_id, name, company) VALUES (1, 'contact name1', 'contact company1');
