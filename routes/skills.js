@@ -3,6 +3,45 @@ const pool = require("../db_config");
 const auth = require("../middleware/auth");
 
 ////// Skill C.R.U.D.
+//Get count of all skills
+router.get("/count",auth, function(req, res){
+  const account_id = res.locals.user.id
+  const text = 'select s."name",count(s."name") from "application_skills" app join "skills" s on app."skill_id" = s."id" where s."account_id" = $1 group by s."name"'
+  pool.query(text, [account_id], (err, result) => {
+    if (err) {
+      res.status(400).json({error:err});
+    } else {
+      res.status(200).send(result.rows);
+    }
+  });
+});
+
+router.get("/count/:name",auth, function(req, res){
+  const { name } = req.params
+  const account_id = res.locals.user.id
+  const text = 'select s."name",count(s."name") from "application_skills" app join "skills" s on app."skill_id" = s."id" where s."account_id" = $1 and "name" = $2 group by s."name"'
+  pool.query(text, [account_id, name], (err, result) => {
+    if (err) {
+      res.status(400).json({error:err});
+    } else {
+      res.status(200).send(result.rows);
+    }
+  });
+});
+
+//Get all skills for a given application
+router.get("/application_skills/:application_id",auth, function(req, res){
+  const { application_id } = req.params
+  const account_id = res.locals.user.id
+  const text = 'SELECT DISTINCT skills."name","skill_id" FROM application_skills INNER JOIN skills ON application_skills.skill_id = skills.id  WHERE "application_id" = $1 and application_skills."account_id" = $2;'
+  pool.query(text, [application_id,account_id], (err, result) => {
+    if (err) {
+      res.status(400).json({error:err});
+    } else {
+      res.status(200).send(result.rows);
+    }
+  });
+});
 
 //Get a single skills
 router.get("/:skill_id",auth, function(req, res){
@@ -24,20 +63,6 @@ router.get("/:skill_id",auth, function(req, res){
 });
 
 
-//Get all skills for a given application
-router.get("/application_skills/:application_id",auth, function(req, res){
-  const { application_id } = req.params
-  const account_id = res.locals.user.id
-  const text = 'SELECT DISTINCT skills."name","skill_id" FROM application_skills INNER JOIN skills ON application_skills.skill_id = skills.id  WHERE "application_id" = $1 and application_skills."account_id" = $2;'
-  pool.query(text, [application_id,account_id], (err, result) => {
-    if (err) {
-      res.status(400).json({error:err});
-    } else {
-      res.status(200).send(result.rows);
-    }
-  });
-});
-
 //Get all skills for a given account
 router.get("",auth, function(req, res){
   const account_id = res.locals.user.id
@@ -49,6 +74,8 @@ router.get("",auth, function(req, res){
     res.status(200).send(result.rows);
   });
 });
+
+
 
 
 //Create a new skill
