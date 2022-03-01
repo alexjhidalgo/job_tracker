@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { useTable } from "react-table";
 import IconOptions from "./IconOptions";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "../LoadingSpinner";
 
 function ContactsTable({ data, setData, loading }) {
   const columns = useMemo(

@@ -4,6 +4,7 @@ import Landing from "./components/landing/Landing";
 import Navbar from "./components/navbar/Navbar";
 import Home from "./components/home/Home";
 import Contacts from "./components/contacts/Contacts";
+import Skills from "./components/skills/Skills";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route element={<Navbar />}>
             <Route path="/home" element={<Home />} />
             <Route path="/contacts" element={<Contacts />} />
+            <Route path="/skills" element={<Skills />} />
           </Route>
         </Routes>
       </HashRouter>
