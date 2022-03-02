@@ -10,7 +10,7 @@ router.post("/", (req, res) => {
 router.get("/:application_number", function (req, res, next) {
   let { application_number } = req.params;
   const text =
-    "SELECT id, account_id, status, date_added, notes, company, position, description, salary FROM public.applications WHERE account_id = $1 AND id = $1";
+    "SELECT id, account_id, status, date_added, notes, company, position, description, salary FROM applications WHERE account_id = $1 AND id = $1";
   pool.query(text, [application_number], (err, result) => {
     if (err) {
       console.log(err);
@@ -25,7 +25,7 @@ router.get("/:application_number", function (req, res, next) {
 router.get("/:applications_number", function (req, res, next) { 
   let { applications_number } = req.params;                         
   const text =                                                 
-  "SELECT account_id, status, date_added, notes, company, position, description, salary FROM public.applications WHERE account_id = $1";
+  "SELECT account_id, status, date_added, notes, company, position, description, salary FROM applications WHERE account_id = $1";
   pool.query(text, [applications_number], (err, result) => {
     if (err) {
       console.log(err);
@@ -39,7 +39,7 @@ router.get("/:applications_number", function (req, res, next) {
 // Delete an application
 router.delete("/:application_number", (req, res) => {
   let { applications_number } = req.params;
-  let sql = "DELETE FROM public.applications WHERE account_id = $1 AND id = $1";
+  let sql = "DELETE FROM applications WHERE account_id = $1 AND id = $1";
   pool.query(sql, [applications_number], (err, result) => {
     if (err) {
       console.log(err);
