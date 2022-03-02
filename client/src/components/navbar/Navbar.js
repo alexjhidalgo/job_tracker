@@ -52,6 +52,7 @@ function Navbar() {
               <div className="py-1 divide-y divide-slate-400">
                 <DropdownOption name="Home" path="/home" />
                 <DropdownOption name="Contacts" path="/contacts" />
+                <DropdownOption name="Skills" path="/skills" />
                 <DropdownOption name="Logout" path="/" logout={logout} />
               </div>
             </Menu.Items>

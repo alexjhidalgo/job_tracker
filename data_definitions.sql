@@ -1,96 +1,36 @@
---
--- PostgreSQL database dump
---
+DROP TABLE IF EXISTS accounts_skills;
 
--- Dumped from database version 14.1
--- Dumped by pg_dump version 14.1
+DROP TABLE IF EXISTS application_skills;
 
--- Started on 2022-01-26 16:10:28 PST
+DROP TABLE IF EXISTS applications_contacts;
 
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
+DROP TABLE IF EXISTS job_offers;
 
---
--- TOC entry 3660 (class 1262 OID 14021)
--- Name: postgres; Type: DATABASE; Schema: -; Owner: postgres
---
+DROP TABLE IF EXISTS applications;
 
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
+DROP TABLE IF EXISTS contacts_communications;
 
---
--- TOC entry 3661 (class 0 OID 0)
--- Dependencies: 3660
--- Name: DATABASE postgres; Type: COMMENT; Schema: -; Owner: postgres
---
+DROP TABLE IF EXISTS communications;
 
-COMMENT ON DATABASE postgres IS 'default administrative connection database';
+DROP TABLE IF EXISTS contacts;
+
+DROP TABLE IF EXISTS resumes;
+
+DROP TABLE IF EXISTS skills;
+
+DROP TABLE IF EXISTS accounts;
 
 
-SET default_tablespace = '';
-
-SET default_table_access_method = heap;
-
--- Table: public.accounts
-
-DROP TABLE IF EXISTS public.accounts_skills;
-
-DROP TABLE IF EXISTS public.application_skills;
-
-DROP TABLE IF EXISTS public.applications_contacts;
-
-DROP TABLE IF EXISTS public.job_offers;
-
-DROP TABLE IF EXISTS public.applications;
-
-DROP TABLE IF EXISTS public.contacts_communications;
-
-DROP TABLE IF EXISTS public.communications;
-
-DROP TABLE IF EXISTS public.contacts;
-
-DROP TABLE IF EXISTS public.resumes;
-
-DROP TABLE IF EXISTS public.skills;
-
-DROP TABLE IF EXISTS public.accounts;
-
-
-CREATE TABLE IF NOT EXISTS public.accounts
+CREATE TABLE IF NOT EXISTS accounts
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     username text COLLATE pg_catalog."default" NOT NULL,
     password text COLLATE pg_catalog."default" NOT NULL,
     email text COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT accounts_pkey PRIMARY KEY (id)
-)
+);
 
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.accounts
-    OWNER to postgres;
-
-
-
--- Table: public.skills
-
-CREATE TABLE IF NOT EXISTS public.skills
+CREATE TABLE IF NOT EXISTS skills
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     name text COLLATE pg_catalog."default" NOT NULL,
@@ -100,16 +40,9 @@ CREATE TABLE IF NOT EXISTS public.skills
         REFERENCES public.accounts (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
-)
+);
 
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.skills
-    OWNER to postgres;
-
--- Table: public.accounts_skills
-
-CREATE TABLE IF NOT EXISTS public.accounts_skills
+CREATE TABLE IF NOT EXISTS accounts_skills
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     skill_id integer NOT NULL,
@@ -123,15 +56,9 @@ CREATE TABLE IF NOT EXISTS public.accounts_skills
         REFERENCES public.skills (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
-)
+);
 
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.accounts_skills
-    OWNER to postgres;
-
--- Table: public.applications
-CREATE TABLE IF NOT EXISTS public.applications
+CREATE TABLE IF NOT EXISTS applications
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     account_id integer NOT NULL,
@@ -147,16 +74,11 @@ CREATE TABLE IF NOT EXISTS public.applications
         REFERENCES public.accounts (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
-)
-
-TABLESPACE pg_default;
-ALTER TABLE IF EXISTS public.applications
-    OWNER to postgres;
-
--- Table: public.contacts
+);
 
 
-CREATE TABLE IF NOT EXISTS public.contacts
+
+CREATE TABLE IF NOT EXISTS contacts
 (
     account_id integer NOT NULL,
     name text COLLATE pg_catalog."default" NOT NULL,
@@ -171,17 +93,11 @@ CREATE TABLE IF NOT EXISTS public.contacts
         REFERENCES public.accounts (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.contacts
-    OWNER to postgres;
-
--- Table: public.application_skills
+);
 
 
-CREATE TABLE IF NOT EXISTS public.application_skills
+
+CREATE TABLE IF NOT EXISTS application_skills
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     application_id integer,
@@ -200,19 +116,11 @@ CREATE TABLE IF NOT EXISTS public.application_skills
         REFERENCES public.skills (id) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.application_skills
-    OWNER to postgres;
+);
 
 
 
--- Table: public.applications_contacts
-
-
-CREATE TABLE IF NOT EXISTS public.applications_contacts
+CREATE TABLE IF NOT EXISTS applications_contacts
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     application_id integer NOT NULL,
@@ -232,26 +140,14 @@ CREATE TABLE IF NOT EXISTS public.applications_contacts
         ON UPDATE CASCADE
         ON DELETE CASCADE
         NOT VALID
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.applications_contacts
-    OWNER to postgres;
--- Index: fki_contact_id_fk
-
--- DROP INDEX IF EXISTS public.fki_contact_id_fk;
+);
 
 CREATE INDEX IF NOT EXISTS fki_contact_id_fk
-    ON public.applications_contacts USING btree
+    ON applications_contacts USING btree
     (contact_id ASC NULLS LAST)
     TABLESPACE pg_default;
 
--- Table: public.communications
-
-
-
-CREATE TABLE IF NOT EXISTS public.communications
+CREATE TABLE IF NOT EXISTS communications
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     account_id integer NOT NULL,
@@ -262,18 +158,9 @@ CREATE TABLE IF NOT EXISTS public.communications
         REFERENCES public.accounts (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
-)
+);
 
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.communications
-    OWNER to postgres;
-
-
--- Table: public.contacts_communications
-
-
-CREATE TABLE IF NOT EXISTS public.contacts_communications
+CREATE TABLE IF NOT EXISTS contacts_communications
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     contact_id integer NOT NULL,
@@ -293,24 +180,14 @@ CREATE TABLE IF NOT EXISTS public.contacts_communications
         REFERENCES public.communications (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.contacts_communications
-    OWNER to postgres;
--- Index: fki_contact_id
-
--- DROP INDEX IF EXISTS public.fki_contact_id;
+);
 
 CREATE INDEX IF NOT EXISTS fki_contact_id
-    ON public.contacts_communications USING btree
+    ON contacts_communications USING btree
     (contact_id ASC NULLS LAST)
     TABLESPACE pg_default;
 
--- Table: public.job_offers
-
-CREATE TABLE IF NOT EXISTS public.job_offers
+CREATE TABLE IF NOT EXISTS job_offers
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     account_id integer NOT NULL,
@@ -324,18 +201,9 @@ CREATE TABLE IF NOT EXISTS public.job_offers
         REFERENCES public.accounts (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
-)
+);
 
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.job_offers
-    OWNER to postgres;
-
--- Table: public.resumes
-
-
-
-CREATE TABLE IF NOT EXISTS public.resumes
+CREATE TABLE IF NOT EXISTS resumes
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     account_id integer NOT NULL,
@@ -345,12 +213,4 @@ CREATE TABLE IF NOT EXISTS public.resumes
         REFERENCES public.accounts (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.resumes
-    OWNER to postgres;
-
-
-
+);
