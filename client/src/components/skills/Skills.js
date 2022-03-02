@@ -7,43 +7,53 @@ function Skills() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("/skills", {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.error) return alert(res.error);
+    const getTotalApplications = async () => {
+      // TODO: make fetch request
+      return 4;
+    };
 
-        const fakeResults = [
-          { name: "Javascript", count: 3 },
-          { name: "HTML", count: 4 },
-          { name: "CSS", count: 2 },
-        ];
-        const fakeTotal = 7;
-
-        setData(buildData(fakeResults, fakeTotal));
-        setLoading(false);
+    const getSkills = async () => {
+      const res = await fetch("/skills/count", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
       });
+      const results = await res.json();
+
+      if (results.error) {
+        console.log(results.error);
+        return null;
+      }
+      return results;
+    };
+
+    const buildData = (results, total) => {
+      const graphData = [];
+
+      for (const entry of results) {
+        graphData.push({
+          name: entry.name,
+          percent: Math.round((entry.count / total) * 100),
+        });
+      }
+      graphData.sort((a, b) => b.percent - a.percent);
+
+      return graphData;
+    };
+
+    const showData = async () => {
+      const appTotal = await getTotalApplications();
+      const results = await getSkills();
+      if (results === null || appTotal === null) return alert("Error occurred while loading skills.");
+
+      setData(buildData(results, appTotal));
+      setLoading(false);
+    };
+
+    showData();
   }, []);
 
-  const buildData = (results, total) => {
-    const graphData = [];
-
-    for (const entry of results) {
-      graphData.push({
-        name: entry.name,
-        percent: Math.round((entry.count / total) * 100),
-      });
-    }
-    graphData.sort((a, b) => b.percent - a.percent);
-
-    return graphData;
-  };
-
-  const customNameLabel = (props) => {
-    const { x, y, value } = props;
+  const customNameLabel = ({ x, y, value }) => {
     return (
       <text x={x} y={y} dy={-10} dx={3} fontSize={20}>
         {value}
@@ -65,7 +75,6 @@ function Skills() {
     <div className="flex w-full justify-center">
       <div className="flex flex-col justify-start w-[90%] py-10">
         <h1 className="text-4xl sm:text-5xl text-slate-900">Skills Overview</h1>
-
         <div className="w-full py-3">
           {loading ? (
             <LoadingSpinner />
@@ -76,7 +85,7 @@ function Skills() {
               <p className="text-lg text-slate-900 py-3 italic">
                 This graph shows the percentage of your applications that contains a specific skill.
               </p>
-              <ResponsiveContainer width="100%" height={data.length * 100}>
+              <ResponsiveContainer width="100%" height={data.length * 120}>
                 <BarChart layout="vertical" data={data} margin={{ left: 20, right: 20, top: 20, bottom: 20 }}>
                   <XAxis
                     type="number"
