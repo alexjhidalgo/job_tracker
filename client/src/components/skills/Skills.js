@@ -8,8 +8,18 @@ function Skills() {
 
   useEffect(() => {
     const getTotalApplications = async () => {
-      // TODO: make fetch request
-      return 4;
+      const res = await fetch("/applications/count", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      const results = await res.json();
+
+      if (results.error) {
+        console.log(results.error);
+        return null;
+      }
+      return results[0].count;
     };
 
     const getSkills = async () => {
