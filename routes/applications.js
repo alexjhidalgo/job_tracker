@@ -7,10 +7,10 @@ router.post("/", (req, res) => {
 });
 
 // Get single application
-router.get("/:application_number", function (req, res, next) {
+router.get("/:application_number", auth,  function (req, res, next) {
   let { application_number } = req.params;
   const text =
-    "SELECT id, account_id, status, date_added, notes, company, position, description, salary FROM applications WHERE account_id = $1 AND id = $1";
+    "SELECT status, date_added, notes, company, position, description, salary FROM applications WHERE id = $1";
   pool.query(text, [application_number], (err, result) => {
     if (err) {
       console.log(err);
@@ -22,10 +22,10 @@ router.get("/:application_number", function (req, res, next) {
 });
 
 // Get multiple applications
-router.get("/:applications_number", function (req, res, next) { 
+router.get("/:applications_number", auth,  function (req, res, next) { 
   let { applications_number } = req.params;                         
   const text =                                                 
-  "SELECT account_id, status, date_added, notes, company, position, description, salary FROM applications WHERE account_id = $1";
+  "SELECT status, date_added, notes, company, position, description, salary FROM applications";
   pool.query(text, [applications_number], (err, result) => {
     if (err) {
       console.log(err);
@@ -37,29 +37,29 @@ router.get("/:applications_number", function (req, res, next) {
 });
 
 // Delete an application
-router.delete("/:application_number", (req, res) => {
+router.delete("/:application_number", auth,  (req, res) => {
   let { applications_number } = req.params;
-  let sql = "DELETE FROM applications WHERE account_id = $1 AND id = $1";
+  let sql = "DELETE FROM applications WHERE id = $1";
   pool.query(sql, [applications_number], (err, result) => {
     if (err) {
       console.log(err);
       res.status(400).send(err);
     }
-    res.status(200).send(result.rows);
+    res.status(204).send({"result": "Application successfully deleted"});
     console.log(`Application ${application_number} deleted`);
   });
 });
 
 // Delete all applications
-router.delete("/:applications_number", (req, res) => {
+router.delete("/:applications_number", auth,  (req, res) => {
   let { applications_number } = req.params;
-  let sql =  "DELETE FROM applications WHERE account_id = $1";
+  let sql =  "DELETE FROM applications";
   pool.query(sql, [applications_number], (err, result) => {
     if (err) {
       console.log(err);
       res.status(400).send(err);
     }
-    res.status(200).send(result.rows);
+    res.status(204).send({"result": "Applications successfully deleted"});
     console.log(result.affectedRows + " application(s) deleted");
   });
 });
