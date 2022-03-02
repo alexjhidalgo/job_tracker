@@ -1,10 +1,26 @@
 const router = require("express").Router();
 const pool = require("../db_config");
+const auth = require("../middleware/auth");
 
 // Create new application
 router.post("/", (req, res) => {
   res.send(`Here is placeholder code for adding a new job application_number`);
 });
+
+//Get Count of Applications
+router.get("/count",auth, function (req, res) {
+  const account_id = res.locals.user.id
+  const text =
+    'SELECT count("id") from "applications" where "account_id" = $1;'
+  pool.query(text, [account_id], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+    res.status(200).send(result.rows);
+  });
+});
+
 
 // Get single application
 router.get("/:application_number", auth,  function (req, res, next) {
