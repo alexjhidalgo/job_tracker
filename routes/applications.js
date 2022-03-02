@@ -21,6 +21,27 @@ router.get("/:application_number", auth,  function (req, res, next) {
   });
 });
 
+// Update an application
+router.put("/", auth, (req, res) => {
+  const text =
+    "UPDATE applications SET (status, date_added, notes, company, position, description, salary) = ($1, $2, $3, $4, $5, $6) WHERE id = $7;";
+  const values = [
+    req.body.status,
+    req.body.date_added,
+    req.body.notes,
+    req.body.company,
+    req.body.position,
+    req.body.description,
+    req.body.salary,
+  ];
+
+  pool.query(updateQuery, values, (err, results) => {
+    if (err) return res.status(400).json({ error: err });
+
+    res.status(200).json({ message: "update success" });
+  });
+});
+
 // Get multiple applications
 router.get("/:applications_number", auth,  function (req, res, next) { 
   let { applications_number } = req.params;                         
