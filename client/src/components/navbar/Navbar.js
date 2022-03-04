@@ -51,7 +51,6 @@ function Navbar() {
             <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 bg-slate-700 rounded-sm">
               <div className="py-1 divide-y divide-slate-400">
                 <DropdownOption name="Home" path="/home" />
-                <DropdownOption name="Applications" path="/applications" />
                 <DropdownOption name="Contacts" path="/contacts" />
                 <DropdownOption name="Skills" path="/skills" />
                 <DropdownOption name="Logout" path="/" logout={logout} />
