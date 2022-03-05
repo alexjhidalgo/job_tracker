@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import React from "react";
+// import axios from 'axios';
 import BootstrapTable from "react-bootstrap-table-next";
 import cellEditFactory from 'react-bootstrap-table2-editor';
-import {Modal, Form, Button} from 'react-bootstrap'
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import {Modal, Form, Button} from 'react-bootstrap';
 // import { TableHeaderColumn } from 'react-bootstrap-table';
 const ApplicationTable = () => {
     const columns = [
@@ -24,6 +26,7 @@ const ApplicationTable = () => {
             keyField='id'
             columns={ columns }
             cellEdit={ cellEditFactory({ mode: 'click'}) }
+            pagination={paginationFactory()}
           />
         </div>
       );
