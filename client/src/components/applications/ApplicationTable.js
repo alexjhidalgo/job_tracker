@@ -6,9 +6,11 @@ import BootstrapTable from "react-bootstrap-table-next";
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import Modal from 'react-modal';
+import ApplicationModal from './AddApplicationModal';
+import LinkAddModal from './LinkAddModal';
 const ApplicationTable = () => {
 
-    const[modalIsOpen, setIsOpen] = useState(false);
+    const[modalIsOpen, setIsAppModalOpen] = useState(false);
 
     const columns = [
         {text: 'ID', dataField: 'id'},
@@ -46,46 +48,8 @@ const ApplicationTable = () => {
             cellEdit={ cellEditFactory({ mode: 'click'}) }
             pagination={paginationFactory()}
           />
-          <div style={ {maxWidth: 150} }>
-          <Modal isOpen={modalIsOpen} size="sm">
-            <form className="flex flex-col gap-5">
-              <h1 className="text-2xl">Add Application</h1>
-              <input
-                name="id"
-                placeholder="ID"
-                type="text"
-                className="grayInput w-full"
-                //onChange={handleChange}
-              />
-              <input
-                name="position"
-                placeholder="Position"
-                type="text"
-                className="grayInput w-full"
-                //onChange={handleChange}
-              />
-              <input
-                name="company"
-                placeholder="Company"
-                className="grayInput w-full"
-                type="text"
-                //onChange={handleChange}
-              />
-              <div className="flex flex-row justify-evenly mt-6 gap-10">
-                <button type="button" className="rounded basis-1/2 px-10 py-2 bg-red-300 hover:bg-red-400" onClick={() =>setIsOpen(false)}>
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  className="rounded basis-1/2 px-10 py-2 bg-green-200 hover:bg-green-300"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Save
-                </button>
-              </div>
-            </form>
-          </Modal>
-          </div>
+          <ApplicationModal />
+          <LinkAddModal />
         </div>
       );
         
