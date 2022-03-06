@@ -3,7 +3,7 @@ import { prop } from 'cheerio/lib/api/attributes';
 function ApplicationModal (props) {
     return (
         <div style={ {maxWidth: 150} }>
-          <Modal isOpen={props.isModalOpen} size="sm">
+          <Modal isOpen={props.modalIsOpen} size="sm">
             <form className="flex flex-col gap-5">
               <h1 className="text-2xl">Add Application</h1>
               <input
