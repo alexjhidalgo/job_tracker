@@ -1,8 +1,9 @@
 import Modal from 'react-modal';
-function ApplicationModal () {
+import { prop } from 'cheerio/lib/api/attributes';
+function ApplicationModal (props) {
     return (
         <div style={ {maxWidth: 150} }>
-          <Modal isOpen={modalIsOpen} size="sm">
+          <Modal isOpen={props.isModalOpen} size="sm">
             <form className="flex flex-col gap-5">
               <h1 className="text-2xl">Add Application</h1>
               <input
@@ -27,13 +28,13 @@ function ApplicationModal () {
                     //onChange={handleChange}
                 />
                 <div className="flex flex-row justify-evenly mt-6 gap-10">
-                    <button type="button" className="rounded basis-1/2 px-10 py-2 bg-red-300 hover:bg-red-400" onClick={() =>setIsOpen(false)}>
+                    <button type="button" className="rounded basis-1/2 px-10 py-2 bg-red-300 hover:bg-red-400" onClick={props.handleAppModClose}>
                     Cancel
                     </button>
                     <button
                     type="button"
                     className="rounded basis-1/2 px-10 py-2 bg-green-200 hover:bg-green-300"
-                    onClick={() => setIsOpen(false)}
+                    onClick={props.handleAppModClose}
                     >
                     Save
                     </button>
