@@ -8,12 +8,14 @@ import ApplicationModal from './AddApplicationModal';
 import LinkAddModal from './LinkAddModal';
 import SkillAddModal from './AddSkillModal';
 import SkillRemoveModal from './SkillRemoveModal';
+import ApplicationRemoveModal from './ApplicationRemoveModal';
 const ApplicationTable = () => {
 
     const[isAppModalOpen, setAppModalOpen] = useState(false);
     const[isLinkAddModalOpen, setLinkAddModalOpen] = useState(false);
     const[isSkillAddModalOpen, setSkillAddModalOpen] = useState(false);
     const[isSkillRmModOpen, setSkillRmModalOpen] = useState(false);
+    const[isAppRemoveModalOpen, setAppRemoveModalOpen] = useState(false);
 
     const columns = [
         {text: 'ID', dataField: 'id'},
@@ -24,7 +26,7 @@ const ApplicationTable = () => {
         { text: 'Options', dataField: 'buttons', editable: false}
     ];
     const data = [
-        { id: '1', position: "SWEIII", company: "Airbnb", skills: <div><button onClick={() =>setSkillRmModalOpen(true)} className='btn'>JavaScript</button> <button onClick={() =>setSkillRmModalOpen(true)} className='btn'>C++</button><button onClick={() =>setSkillRmModalOpen(true)} className='btn'>Jira</button></div>, buttons: <div><button className='btn'>View</button> <button className='btn'>Delete</button><button onClick={() =>setSkillAddModalOpen(true)} className='btn'>+ Skill</button></div>  },
+        { id: '1', position: "SWEIII", company: "Airbnb", skills: <div><button onClick={() =>setSkillRmModalOpen(true)} className='btn'>JavaScript</button> <button onClick={() =>setSkillRmModalOpen(true)} className='btn'>C++</button><button onClick={() =>setSkillRmModalOpen(true)} className='btn'>Jira</button></div>, buttons: <div><button className='btn'>View</button> <button onClick={() =>setAppRemoveModalOpen(true)} className='btn'>Delete</button><button onClick={() =>setSkillAddModalOpen(true)} className='btn'>+ Skill</button></div>  },
         { id: '2', position: "SWE Intern", company: "Compass", skills: <div><button className='btn'>JavaScript</button> <button className='btn'>C++</button><button className='btn'>Jira</button></div>, buttons: <div><button className='btn'>View</button> <button className='btn'>Delete</button><button onClick={() =>setSkillAddModalOpen(true)} className='btn'>+ Skill</button></div> },
         { id: '3', position: "SWE Intern", company: "Compass", skills: <div><button className='btn'>JavaScript</button> <button className='btn'>C++</button><button className='btn'>Jira</button></div>, buttons: <div><button className='btn'>View</button> <button className='btn'>Delete</button><button onClick={() =>setSkillAddModalOpen(true)} className='btn'>+ Skill</button></div> },
         { id: '4', position: "SWE Intern", company: "Compass", skills: <div><button className='btn'>JavaScript</button> <button className='btn'>C++</button><button className='btn'>Jira</button></div>, buttons: <div><button className='btn'>View</button> <button className='btn'>Delete</button><button onClick={() =>setSkillAddModalOpen(true)} className='btn'>+ Skill</button></div> },
@@ -55,6 +57,7 @@ const ApplicationTable = () => {
           <LinkAddModal modalIsOpen={isLinkAddModalOpen} handleLinkModClose={() => setLinkAddModalOpen(false)} />
           <SkillAddModal modalIsOpen={isSkillAddModalOpen} handleSkillModClose={() => setSkillAddModalOpen(false)} />
           <SkillRemoveModal modalIsOpen={isSkillRmModOpen} handleSkillRmModClose={() => setSkillRmModalOpen(false)} />
+          <ApplicationRemoveModal modalIsOpen={isAppRemoveModalOpen} handleAppRmModClose={() => setAppRemoveModalOpen(false)} />
         </div>
       );
         
