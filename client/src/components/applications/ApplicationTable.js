@@ -5,6 +5,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ApplicationModal from './AddApplicationModal';
+import ViewApplicationModal from './ViewApplicationModal';
 import LinkAddModal from './LinkAddModal';
 import SkillAddModal from './AddSkillModal';
 import SkillRemoveModal from './SkillRemoveModal';
@@ -14,9 +15,11 @@ const ApplicationTable = () => {
     const[isAppModalOpen, setAppModalOpen] = useState(false);
     const[isLinkAddModalOpen, setLinkAddModalOpen] = useState(false);
     const[isSkillAddModalOpen, setSkillAddModalOpen] = useState(false);
+    const[isViewModalOpen, setViewModalOpen] = useState(false);
     const[isSkillRmModOpen, setSkillRmModalOpen] = useState(false);
     const[isAppRemoveModalOpen, setAppRemoveModalOpen] = useState(false);
     const[liveData, setData] = useState([]);
+    const[modalInfo, setModalInfo] = useState([]);
 
     useEffect(() => {
       fetch("/applications", {
@@ -85,6 +88,7 @@ const ApplicationTable = () => {
           <SkillAddModal modalIsOpen={isSkillAddModalOpen} handleSkillModClose={() => setSkillAddModalOpen(false)} />
           <SkillRemoveModal modalIsOpen={isSkillRmModOpen} handleSkillRmModClose={() => setSkillRmModalOpen(false)} />
           <ApplicationRemoveModal modalIsOpen={isAppRemoveModalOpen} handleAppRmModClose={() => setAppRemoveModalOpen(false)} />
+          <ViewApplicationModal modalIsOpen={isViewModalOpen} handleViewAppClose={() => setViewModalOpen(false)} modalData={modalInfo} />
         </div>
       );
         
