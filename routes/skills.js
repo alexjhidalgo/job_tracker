@@ -153,6 +153,35 @@ router.post("", auth, async (req, res) => {
           });
     });
 
+    router.delete("/application_skills/:application_skills_id",auth, (req, res) => {
+      const { application_skills_id } = req.params;
+      if(typeof(application_skills_id) == "undefined")
+      {
+          var Error = {"Error":"The request object is missing at least one of the required attributes"}; 
+          res.status(400).json({Error: Error});
+      } else {
+      const text = 'delete from "application_skills" where "id" = $1;'    
+      pool.query(text, [application_skills_id], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err);
+        } else {
+          res.status(204).json({result: "Skill successfully deleted"});
+        }    
+      })
+    }});
+
+
+
+
+
+
+
+
+
+
+
+
 router.delete("/:skill_id",auth, (req, res) => {
   const { skill_id } = req.params;
   if(typeof(skill_id) == "undefined")
