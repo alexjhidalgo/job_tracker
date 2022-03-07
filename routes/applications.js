@@ -6,7 +6,7 @@ const auth = require("../middleware/auth");
 router.post("/", auth, (req, res) => {  
   const account_id = res.locals.user.id
     const insertQuery =
-      'INSERT INTO "applications" ("status", "date_added", "notes", "company", "position", "description", "salary","account_id") VALUES ($1, $2, $3, $4, $5, $6, $7,$8);';
+      'INSERT INTO "applications" ("status", "date_added", "notes", "company", "position", "description", "salary","account_id") VALUES ($1, $2, $3, $4, $5, $6, $7,$8) RETURNING id;';
     const values = [
       req.body.status,
       req.body.date_added,
@@ -17,10 +17,10 @@ router.post("/", auth, (req, res) => {
       req.body.salary,
       account_id,
     ];
-  
+
     pool.query(insertQuery, values, (err, result) => {
       if (err) return res.status(400).json({ error: err });
-      res.status(200).json({ messege : "application created"});
+      res.status(200).json({ id:result.rows[0].id, messege : "application created"});
     });
   });
 
@@ -81,7 +81,7 @@ router.put("/:application_id", auth, (req, res) => {
 router.get("/", auth,  function (req, res, next) { 
   const account_id = res.locals.user.id                      
   const text =                                                 
-  "SELECT status, date_added, notes, company, position, description, salary FROM applications WHERE account_id = $1";
+  "SELECT id,status, date_added, notes, company, position, description, salary FROM applications WHERE account_id = $1";
   pool.query(text, [account_id], (err, result) => {
     if (err) {
       console.log(err);
