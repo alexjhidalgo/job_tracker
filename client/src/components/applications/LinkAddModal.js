@@ -32,7 +32,7 @@ function LinkAddModal (props) {
                 Submit
                 </button>
             </div>
-            </form>
+          </form>
         </Modal>
     )
     
