@@ -73,7 +73,7 @@ const ApplicationTable = () => {
           <button className='btn' variant='primary' onClick={() =>setAppModalOpen(true)}>+ Add Application</button>
           <button className='btn' variant='primary' onClick={() =>setLinkAddModalOpen(true)}>+ App Link Add</button>
           <BootstrapTable
-            data={ data.map((item) => { 
+            data={ liveData.map((item) => { 
               const { skills, ...rest} = item;
               return {
                 ...rest,
