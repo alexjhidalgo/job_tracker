@@ -171,17 +171,6 @@ router.post("", auth, async (req, res) => {
       })
     }});
 
-
-
-
-
-
-
-
-
-
-
-
 router.delete("/:skill_id",auth, (req, res) => {
   const { skill_id } = req.params;
   if(typeof(skill_id) == "undefined")
