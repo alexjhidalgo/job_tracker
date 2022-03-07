@@ -81,7 +81,7 @@ router.put("/:application_id", auth, (req, res) => {
 router.get("/", auth,  function (req, res, next) { 
   const account_id = res.locals.user.id                      
   const text =                                                 
-  "SELECT status, date_added, notes, company, position, description, salary FROM applications WHERE account_id = $1";
+  "SELECT id, status, date_added, notes, company, position, description, salary FROM applications WHERE account_id = $1";
   pool.query(text, [account_id], (err, result) => {
     if (err) {
       console.log(err);
