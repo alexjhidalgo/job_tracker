@@ -83,7 +83,7 @@ const ApplicationTable = () => {
             cellEdit={ cellEditFactory({ mode: 'click'}) }
             pagination={paginationFactory()}
           />
-          <ApplicationModal modalIsOpen={isAppModalOpen} handleAppModClose={() => setAppModalOpen(false)} />
+          <ApplicationModal setData={setData} modalIsOpen={isAppModalOpen} handleAppModClose={() => setAppModalOpen(false)} />
           <LinkAddModal modalIsOpen={isLinkAddModalOpen} handleLinkModClose={() => setLinkAddModalOpen(false)} />
           <SkillAddModal modalIsOpen={isSkillAddModalOpen} handleSkillModClose={() => setSkillAddModalOpen(false)} />
           <SkillRemoveModal modalIsOpen={isSkillRmModOpen} handleSkillRmModClose={() => setSkillRmModalOpen(false)} />
