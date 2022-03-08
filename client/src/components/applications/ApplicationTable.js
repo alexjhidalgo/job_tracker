@@ -159,7 +159,7 @@ const ApplicationTable = () => {
               return {
                 ...rest,
                 buttons : <div><button onClick={() => handleViewModalDataOpen([item.date_addedCol, item.statusCol, item.positionCol, item.companyCol, item.salaryCol, item.skills])} className='btn'>View</button>
-                <button className='btn'>+ Skill</button>
+                <button onClick={() => setSkillAddModalOpen(true)} className='btn'>+ Skill</button>
                 <button className='btn'>Delete</button>
                 </div>,
                 skills: skills.map((skill) => {
