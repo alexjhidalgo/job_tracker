@@ -160,7 +160,6 @@ const ApplicationTable = () => {
             }) }
             keyField='id'
             columns={ columns }
-            data={ liveData }
             keyField='id'
             columns={ columns }
             // cellEdit={cellEdit}
