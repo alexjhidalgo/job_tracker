@@ -30,7 +30,7 @@ function ViewApplicationModal (props) {
                 <h5>Position: <b>{props.modalData[2]}</b></h5>
                 <h5>Company: <b>{props.modalData[3]}</b></h5>
                 <h5>Salary: <b>{props.modalData[4]}</b></h5>
-                <h5>Skills: <b>{props.modalData[5].map(skill => skill.name).join(', ')}</b></h5>
+                <h5>Skills: <b>{props.modalData[5]?.map(skill => skill.name).join(', ')}</b></h5>
                 <button
                 type="button"
                 className="rounded basis-1/2 px-10 py-2 bg-green-200 hover:bg-green-300"
