@@ -21,14 +21,19 @@
   }
   .btn {
     font: 16px;
-    padding: 0.5rem 1 rem;
+    padding: 0.5rem 1rem;
     cursor: pointer;
     border-radius: 2px;
-    background-color: #800040;
+    background-color: #0f172a;
     color: white;
-    border: 1px solid #800040;
-    margin: 0 1rem;
+    border: none;
+    margin: 1rem;
   }
+
+  .btn:hover {
+    color: white;
+  }
+
   .tile {
     background-color: white;
     border-radius: 4px;

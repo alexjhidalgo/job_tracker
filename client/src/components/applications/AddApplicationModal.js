@@ -14,7 +14,9 @@ function ApplicationModal (props) {
     const handleSubmit = (e) => e.preventDefault();
 
     const handleSave = () => {
-    if (!inputs.company) return setError("Company is required.");
+    if (!inputs.company || !inputs.date_added) {
+        return setError("Enter a company and date (yyyy/mm/dd)");
+    }
 
     fetch("/applications", {
         method: "POST",
