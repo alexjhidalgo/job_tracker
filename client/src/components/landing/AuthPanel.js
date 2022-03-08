@@ -10,11 +10,6 @@ function AuthPanel() {
   const [showSignup, setShowSignup] = useState(false);
   const [error, setError] = useState(null);
 
-  const googleLogin = () => {
-    // TODO: implement google login
-    navigate("/home");
-  };
-
   const guestLogin = () => {
     fetch("/account/login", {
       method: "POST",
@@ -39,15 +34,8 @@ function AuthPanel() {
       </div>
       {showLogin ? <Login setError={setError} /> : <Signup setError={setError} />}
 
-      <p className="text-red-500 text-sm text-center">{error}</p>
-
-      <div className="flex flex-col justify-center items-center gap-5 my-6">
-        <img
-          src="/images/btn_google_signin_dark_normal_web@2x.png"
-          alt="Sign in with Google"
-          className="h-11 cursor-pointer"
-          onClick={googleLogin}
-        />
+      <div className="flex flex-col items-center justify-center gap-5 mb-5">
+        <p className="text-red-500 text-sm">{error}</p>
         <p onClick={guestLogin} className="font-thin underline cursor-pointer">
           Login as Guest
         </p>
