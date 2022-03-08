@@ -1,7 +1,7 @@
 import Modal from 'react-modal';
 function ApplicationRemoveModal ({rowToDelete, setData, modalData, modalIsOpen, handleAppRmModClose}) {
     const handleDelete = () => {
-        console.log(rowToDelete)
+//         console.log(rowToDelete)
         fetch(`/applications/${modalData[rowToDelete].idCol}`, {
           method: "DELETE",
           headers: {
