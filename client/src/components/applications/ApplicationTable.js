@@ -67,6 +67,10 @@ const ApplicationTable = () => {
         { text: 'Options', dataField: 'buttons', editable: false}
     ];
 
+    function handleViewModalDataOpen (modalArr) {
+      setModalInfo(modalArr);
+      setViewModalOpen(true);
+    }
 
       return (
         <div>
@@ -77,6 +81,10 @@ const ApplicationTable = () => {
               const { skills, ...rest} = item;
               return {
                 ...rest,
+                buttons : <div><button onClick={() => handleViewModalDataOpen([item.date_addedCol, item.statusCol, item.positionCol, item.companyCol, item.salaryCol, item.skills])} className='btn'>View</button>
+                <button className='btn'>+ Skill</button>
+                <button className='btn'>Delete</button>
+                </div>,
                 skills: skills.map((skill) => {
                   return (
                     <button onClick={() =>setSkillRmModalOpen(skill)} className='btn'>{skill.name}</button>
@@ -86,7 +94,6 @@ const ApplicationTable = () => {
             }) }
             keyField='id'
             columns={ columns }
-            cellEdit={ cellEditFactory({ mode: 'click'}) }
             pagination={paginationFactory()}
           />
           <ApplicationModal setData={setData} modalIsOpen={isAppModalOpen} handleAppModClose={() => setAppModalOpen(false)} />
