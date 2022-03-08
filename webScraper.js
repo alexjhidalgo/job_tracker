@@ -1,8 +1,6 @@
 const request = require("request");
 const cheerio = require("cheerio");
-const prompt = require('prompt-sync')();
 
-const link = prompt("please enter an indeed job link: ");
 function getJobInfo(link) {
     let newPosting = new Object();
     request(link, (err, res, body) => {
@@ -16,8 +14,7 @@ function getJobInfo(link) {
         newPosting.jobLocation = fullHeaderText.replace(companyHeaderText, "").trim();
         newPosting.jobDescription = jobInfoContainer.find('#jobDescriptionText').text().trim();
     })
-    setTimeout(() => {console.log(newPosting);}, 5000);
+    setTimeout(() => {return newPosting;}, 5000);
     
 };
-getJobInfo(link);
 module.exports = getJobInfo;

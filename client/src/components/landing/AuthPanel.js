@@ -22,7 +22,7 @@ function AuthPanel() {
       .then((res) => {
         if (res.error) return setError(res.error);
         localStorage.setItem("token", res.jwt);
-        navigate("/home");
+        navigate("/applications");
       });
   };
 
