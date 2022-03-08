@@ -21,7 +21,7 @@ const ApplicationTable = () => {
     const[isAppRemoveModalOpen, setAppRemoveModalOpen] = useState(false);
 
     const[liveData, setData] = useState([]);
-    // const[modalInfo, setModalInfo] = useState([]);
+    const[modalInfo, setModalInfo] = useState([]);
     const[rowNum, setRowNum] = useState([]);
 
     useEffect(() => {
@@ -31,20 +31,36 @@ const ApplicationTable = () => {
         },
       })
         .then((res) => res.json())
-        .then((res) => {
+        .then(async (res) => {
+          for(let obj of res){
+            obj.skills = await getSkills(obj.id)
+          } 
+          console.log(res)
           setData(buildData(res));
           
         });
-    }, );
+    }, []);
 
     function readyToDelete(x){
       setAppRemoveModalOpen(true)
       setRowNum(x)
     };
+    async function getSkills(application_id){
+         const res = await fetch(`/skills/application_skills/${application_id}`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        const result = await res.json()
+        console.log(result)
+        return result
+
+    }
 
     const buildData = (resultList) => {
       const liveData = [];
       for (let i = 0; i < resultList.length; ++i) {
+
         liveData.push({
           idCol: resultList[i].id,
           statusCol: resultList[i].status,
@@ -54,12 +70,7 @@ const ApplicationTable = () => {
           positionCol: resultList[i].position,
           descriptionCol: resultList[i].description,
           salaryCol: resultList[i].salary,
-          skills: <div>
-                    <p hidden="true">${i}</p>
-                    <button onClick={() =>setSkillRmModalOpen(true)} className='btn'>JavaScript</button> 
-                    <button onClick={() =>setSkillRmModalOpen(true)} className='btn'>C++</button>
-                    <button onClick={() =>setSkillRmModalOpen(true)} className='btn'>Jira</button>
-                  </div>, 
+          skills: resultList[i].skills, 
           buttons: <div>
                     <button className='btn'>View</button> 
                     <button onClick={() =>readyToDelete(i)} className='btn'>Delete</button>
@@ -152,6 +163,7 @@ const ApplicationTable = () => {
                 <button className='btn'>Delete</button>
                 </div>,
                 skills: skills.map((skill) => {
+                  console.log(skill)
                   return (
                     <button onClick={() =>setSkillRmModalOpen(skill)} className='btn'>{skill.name}</button>
                   )
@@ -160,7 +172,6 @@ const ApplicationTable = () => {
             }) }
             keyField='id'
             columns={ columns }
-            data={ liveData }
             keyField='id'
             columns={ columns }
             // cellEdit={cellEdit}
