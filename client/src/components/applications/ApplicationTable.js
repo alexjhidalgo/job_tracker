@@ -159,7 +159,7 @@ const ApplicationTable = () => {
                 buttons : <div>
                 <button onClick={() => openAddModal(item.idCol)} className="btn">+ Skill</button>
                 </div>,
-                skills: skills.map((skill) => {
+                skills: skills?.map((skill) => {
                   return (
                     <button onClick={() =>setSkillRmModalOpen(skill)} className='btn'>{skill.name}</button>
                   )
@@ -175,7 +175,7 @@ const ApplicationTable = () => {
           <SkillAddModal modalIsOpen={isSkillAddModalOpen} handleSkillModClose={() => setSkillAddModalOpen(false)} appId={addModalAppId} />
           <SkillRemoveModal modalIsOpen={isSkillRmModOpen} handleSkillRmModClose={() => setSkillRmModalOpen(false)} />
           <ApplicationRemoveModal rowToDelete={rowNum} setData={setData} modalData={liveData} modalIsOpen={isAppRemoveModalOpen} handleAppRmModClose={() => setAppRemoveModalOpen(false)} />
-          <ViewApplicationModal modalIsOpen={isViewModalOpen} handleViewAppClose={() => setViewModalOpen(false)} modalData={liveData} />
+          {/* <ViewApplicationModal modalIsOpen={isViewModalOpen} handleViewAppClose={() => setViewModalOpen(false)} modalData={liveData} /> */}
         </div>
       );
         
