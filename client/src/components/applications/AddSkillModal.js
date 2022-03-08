@@ -11,11 +11,25 @@ function SkillAddModal (props) {
             left: '35%',
         },
     };
-    function handleSubmitData () {
-        console.log(inputs)
+
+    function handleSubmitData (appId) {
         alert("Added the " + inputs.skill + " skill")
-        props.handleSkillModClose();
+        
+        fetch("/skills", {
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: inputs.skill,
+                application_id: appId
+            })
+        })
+        .then(res => res.json())
+        .then(res => { window.location.reload() })
     }
+
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -39,7 +53,7 @@ function SkillAddModal (props) {
                 <button
                 type="button"
                 className="rounded basis-1/2 px-10 py-2 bg-green-200 hover:bg-green-300"
-                onClick={() => handleSubmitData()}
+                onClick={() => handleSubmitData(props.appId)}
                 >
                 Submit
                 </button>

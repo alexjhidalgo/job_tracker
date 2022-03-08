@@ -10,8 +10,9 @@ import LinkAddModal from './LinkAddModal';
 import SkillAddModal from './AddSkillModal';
 import SkillRemoveModal from './SkillRemoveModal';
 import ApplicationRemoveModal from './ApplicationRemoveModal';
-const ApplicationTable = () => {
 
+const ApplicationTable = () => {
+    const [addModalAppId, setAddModalAppId] = useState();
     const[isAppModalOpen, setAppModalOpen] = useState(false);
     const[isLinkAddModalOpen, setLinkAddModalOpen] = useState(false);
     const[isSkillAddModalOpen, setSkillAddModalOpen] = useState(false);
@@ -35,9 +36,7 @@ const ApplicationTable = () => {
           for(let obj of res){
             obj.skills = await getSkills(obj.id)
           } 
-          console.log(res)
           setData(buildData(res));
-          
         });
     }, []);
 
@@ -52,7 +51,6 @@ const ApplicationTable = () => {
           },
         })
         const result = await res.json()
-        console.log(result)
         return result
 
     }
@@ -70,7 +68,7 @@ const ApplicationTable = () => {
           positionCol: resultList[i].position,
           descriptionCol: resultList[i].description,
           salaryCol: resultList[i].salary,
-          skills: resultList[i].skills
+          skills: resultList[i].skills,
         });
       }
       return liveData;
@@ -144,6 +142,11 @@ const ApplicationTable = () => {
   //   });
 // /// End editing Cells Code.
 
+      const openAddModal = (appId) => {
+        setAddModalAppId(appId);
+        setSkillAddModalOpen(true);
+      }
+
       return (
         <div>
           <button className='btn' variant='primary' onClick={() =>setAppModalOpen(true)}>+ Add Application</button>
@@ -154,10 +157,10 @@ const ApplicationTable = () => {
               return {
                 ...rest,
                 buttons : <div><button onClick={() => handleViewModalDataOpen([item.date_addedCol, item.statusCol, item.positionCol, item.companyCol, item.salaryCol, item.skills])} className='btn'>View</button>
-                <button onClick={() => setSkillAddModalOpen(true)} className='btn'>+ Skill</button>
+                <button onClick={() => openAddModal(item.idCol)} className="btn">+ Skill</button>
+                <button className='btn'>Delete</button>
                 </div>,
                 skills: skills.map((skill) => {
-                  console.log(skill)
                   return (
                     <button onClick={() =>setSkillRmModalOpen(skill)} className='btn'>{skill.name}</button>
                   )
@@ -166,14 +169,11 @@ const ApplicationTable = () => {
             }) }
             keyField='id'
             columns={ columns }
-            keyField='id'
-            columns={ columns }
-            // cellEdit={cellEdit}
             pagination={paginationFactory()}
           />
           <ApplicationModal setData={setData} modalIsOpen={isAppModalOpen} handleAppModClose={() => setAppModalOpen(false)} />
           <LinkAddModal modalIsOpen={isLinkAddModalOpen} handleLinkModClose={() => setLinkAddModalOpen(false)} />
-          <SkillAddModal modalIsOpen={isSkillAddModalOpen} handleSkillModClose={() => setSkillAddModalOpen(false)} />
+          <SkillAddModal modalIsOpen={isSkillAddModalOpen} handleSkillModClose={() => setSkillAddModalOpen(false)} appId={addModalAppId} />
           <SkillRemoveModal modalIsOpen={isSkillRmModOpen} handleSkillRmModClose={() => setSkillRmModalOpen(false)} />
           <ApplicationRemoveModal rowToDelete={rowNum} setData={setData} modalData={liveData} modalIsOpen={isAppRemoveModalOpen} handleAppRmModClose={() => setAppRemoveModalOpen(false)} />
           <ViewApplicationModal modalIsOpen={isViewModalOpen} handleViewAppClose={() => setViewModalOpen(false)} modalData={liveData} />
