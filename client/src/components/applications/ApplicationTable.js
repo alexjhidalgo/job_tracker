@@ -21,7 +21,7 @@ const ApplicationTable = () => {
     const[isAppRemoveModalOpen, setAppRemoveModalOpen] = useState(false);
 
     const[liveData, setData] = useState([]);
-    // const[modalInfo, setModalInfo] = useState([]);
+    const[modalInfo, setModalInfo] = useState([]);
     const[rowNum, setRowNum] = useState([]);
 
     useEffect(() => {
