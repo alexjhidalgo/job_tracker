@@ -81,6 +81,11 @@ const ApplicationTable = () => {
         { text: 'Options', dataField: 'buttons', editable: false}
     ];
 
+
+    function handleViewModalDataOpen (modalArr) {
+      setModalInfo(modalArr);
+      setViewModalOpen(true);
+    }
   // /// Editing cells
   
   // // const handleChange = (e) => {
@@ -138,6 +143,23 @@ const ApplicationTable = () => {
           <button className='btn' variant='primary' onClick={() =>setAppModalOpen(true)}>+ Add Application</button>
           <button className='btn' variant='primary' onClick={() =>setLinkAddModalOpen(true)}>+ App Link Add</button>
           <BootstrapTable
+            data={ liveData.map((item) => { 
+              const { skills, ...rest} = item;
+              return {
+                ...rest,
+                buttons : <div><button onClick={() => handleViewModalDataOpen([item.date_addedCol, item.statusCol, item.positionCol, item.companyCol, item.salaryCol, item.skills])} className='btn'>View</button>
+                <button className='btn'>+ Skill</button>
+                <button className='btn'>Delete</button>
+                </div>,
+                skills: skills.map((skill) => {
+                  return (
+                    <button onClick={() =>setSkillRmModalOpen(skill)} className='btn'>{skill.name}</button>
+                  )
+                })
+              }
+            }) }
+            keyField='id'
+            columns={ columns }
             data={ liveData }
             keyField='id'
             columns={ columns }
