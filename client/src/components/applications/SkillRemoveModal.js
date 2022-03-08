@@ -9,7 +9,7 @@ function SkillRemoveModal (props) {
             left: '35%',
         },
     };
-    console.log(props.skill)
+    
     const handleRequest = () => {
         fetch(`localhost:3001/skill_id`, {
             headers: {

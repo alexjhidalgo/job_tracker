@@ -103,7 +103,6 @@ router.post("", auth, async (req, res) => {
   //If skill does not exist Insert into skills and get id
     const createSkill = 'INSERT INTO public."skills"("account_id","name") VALUES ($1, $2);'
     if ( typeof(skill_id.rows[0]) == 'undefined') {
-      console.log("starting here")
       skill_id =  await pool.query(createSkill, [account_id,name]).then(result => {
           return 
       }).then(res => {

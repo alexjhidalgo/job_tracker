@@ -53,7 +53,6 @@ router.post("/login", (req, res) => {
       }
       try {
         isMatch(password, result.rows[0].password).then((match) => {
-          console.log(match);
           if (match) {
             generateAuthToken({ id: result.rows[0].id, username: username }).then((token) => {
               res.status(200).json({ jwt: token, username: username });
