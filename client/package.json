@@ -9,7 +9,19 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "assert": "^2.0.0",
+    "aws-sign2": "^0.7.0",
+    "buffer": "^6.0.3",
+    "cheerio": "^1.0.0-rc.10",
+    "crypto": "^1.0.1",
+    "forever-agent": "^0.6.1",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
     "jspdf-autotable": "^3.5.23",
+    "net": "^1.0.2",
+    "path": "^0.12.7",
+    "querystring": "^0.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-double-scrollbar": "^0.0.15",
@@ -17,6 +29,10 @@
     "react-scripts": "5.0.0",
     "react-table": "^7.7.0",
     "recharts": "^2.1.9",
+    "request": "^2.88.2",
+    "stream": "^0.0.2",
+    "tls": "^0.0.1",
+    "url": "^0.11.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -46,5 +62,8 @@
   "devDependencies": {
     "tailwindcss": "^3.0.16"
   },
+  "browser": {
+    "crypto": false
+},
   "proxy": "http://localhost:3001"
 }
